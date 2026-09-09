@@ -1,0 +1,112 @@
+name: CI
+
+permissions: {}
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  check:
+    name: Foundry project
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      - name: Show Forge version
+        run: forge --version
+
+      - name: Run Forge fmt
+        run: forge fmt --check
+
+      - name: Run Forge build
+        run: forge build --sizes
+
+      - name: Run Forge tests
+        run: forge test -vvv
+
+      - name: Check the gas snapshot has not drifted
+        run: forge snapshot --check
+
+  node:
+    name: Operator node
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+          submodules: recursive
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27"
+          cache-dependency-path: node/go.sum
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+
+      # the node's ABI and end-to-end tests read the compiled artifacts
+      - name: Build contracts
+        run: forge build
+
+      - name: gofmt
+        run: test -z "$(gofmt -l .)"
+        working-directory: node
+
+      - name: Vet
+        run: go vet ./...
+        working-directory: node
+
+      - name: Unit tests
+        run: go test ./...
+        working-directory: node
+
+      - name: End-to-end against a live chain
+        run: go test -tags integration ./...
+        working-directory: node
+
+      # a fresh ceremony every run: the Go DKG and the Solidity verifier have to
+      # agree on keys neither of them has ever seen before
+      - name: Fresh DKG must verify on-chain
+        run: |
+          cd node && go run ./cmd/gen-dkg-vector && cd ..
+          forge test --match-contract DkgInteropTest
+
+  offchain:
+    name: Offchain BLS tooling
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        run: npm ci
+        working-directory: offchain
+
+      - name: Threshold aggregation tests
+        run: npm test
+        working-directory: offchain
+
+      - name: Test vectors are reproducible
+        run: |
+          npm run gen:vectors
+          git diff --exit-code ../test/vectors/bls.json
+        working-directory: offchain

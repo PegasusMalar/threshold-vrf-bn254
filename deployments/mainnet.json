@@ -1,0 +1,22 @@
+{
+    "network": "Robinhood Chain",
+    "chainId": 4663,
+    "rpc": "https://rpc.mainnet.chain.robinhood.com",
+    "explorer": "https://robinhoodchain.blockscout.com",
+    "deployedAt": "2026-09-06",
+    "deployedAtBlock": 56211195,
+    "coordinator": "0x1637195a674630E475ACD18B3D27b13C0EefDac1",
+    "subscription": "0x3fbFE73935B729C6A30AE6060D5708215b3633f5",
+    "verifier": "0x035299fe87211f35f5F36FBBa67919f9545dDd16",
+    "keyHash": "0xba8d6916eee3d049c767c32d4bebd33c3cd9c904c5c8966faf135899c5d56324",
+    "keyEpoch": 1,
+    "threshold": 5,
+    "operators": 9,
+    "subscriptionId": 1,
+    "fees": {
+        "baseFee": 100000000000000,
+        "perWordFee": 200000000,
+        "perCallbackGasFee": 400000000
+    },
+    "_supersedes": "deployments/mainnet-v1.json \u2014 same group key, adds fulfillBatch"
+}

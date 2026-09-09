@@ -1,0 +1,22 @@
+{
+  "name": "@vrf/offchain",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "Offchain BLS BN254 tooling for the threshold VRF (test vector generation, share aggregation)",
+  "scripts": {
+    "gen:vectors": "ts-node scripts/genVectors.ts",
+    "test": "node --require ts-node/register --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@kevincharm/bls-bn254": "2.0.0",
+    "@noble/curves": "^1.9.7",
+    "ethers": "^6.13.0",
+    "mcl-wasm": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.0"
+  }
+}

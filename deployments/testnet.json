@@ -1,0 +1,19 @@
+{
+    "_comment": "The live deployment. Scripts reuse it; a fresh one is only deployed with --fresh. Two subscriptions, and that is not a typo: see subscriptionOwner.",
+    "network": "Robinhood Chain Testnet",
+    "chainId": 46630,
+    "rpc": "https://rpc.testnet.chain.robinhood.com/rpc",
+    "explorer": "https://explorer.testnet.chain.robinhood.com",
+    "deployedAt": "2026-08-29",
+    "coordinator": "0x8c02680e1ab2a9c93b37d7cF1735C39B3d7D1267",
+    "subscription": "0x76662387C693C452aDf63747D46983e373abA8f5",
+    "verifier": "0x7cE30ef0EE0Aa610393e38abe34712fACC3B4455",
+    "keyEpoch": 1,
+    "threshold": 5,
+    "operators": 9,
+    "subscriptionId": 1,
+    "subscriptionOwner": "0xA9179f75ffEadbb35EF0124987C2c3296640d7b8",
+    "_subscriptionWarning": "Subscription 1 is owned by the key above, NOT by the testnet deposit key. Anyone can fund it, but only the owner can withdraw. Check ownerOf before funding.",
+    "loadGenerator": "0xF4ab809f004F00c99f359Eb1c0Ad8978D758bc19",
+    "loadSubscriptionId": 4
+}

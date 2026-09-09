@@ -1,0 +1,37 @@
+# Compiler files
+cache/
+out/
+
+# Commonly ignored directories
+.logs/
+.ignore/
+
+# Development broadcast logs
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Dotenv files
+.env
+.env.*
+!.env.example
+
+node_modules/
+offchain/dist/
+
+# Local and deployed network state. Ceremony records and deploy keys live
+# here; they are not part of the protocol and must never be committed.
+.localnet/
+.testnet/
+.mainnet/
+node/keys/
+
+# Who the operators are and how to reach them: server addresses and RPC URLs
+# with API keys in them. The shape is in deployments/operators.example.json.
+# Every copy, not just the file — a hand-made backup carries the same
+# addresses and keys, and "operators.json.bak" is what one is always called.
+deployments/operators.json
+deployments/operators.json.*
+deployments/operators.*.json
+!deployments/operators.example.json
+
+.DS_Store

@@ -1,0 +1,6 @@
+[submodule "lib/forge-std"]
+	path = lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "lib/bls-bn254"]
+	path = lib/bls-bn254
+	url = https://github.com/kevincharm/bls-bn254

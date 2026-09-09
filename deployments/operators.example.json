@@ -1,0 +1,13 @@
+{
+  "_comment": "TEMPLATE. Copy to operators.json and fill it in. The real file is not committed: it holds server addresses and RPC keys.",
+  "sharePort": 9100,
+  "metricsPort": 9600,
+  "operators": [
+    {
+      "index": 0,
+      "ssh": "ubuntu@203.0.113.4",
+      "host": "203.0.113.4",
+      "rpc": "https://robinhood-testnet.g.alchemy.com/v2/YOUR_KEY"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+forge-std/=lib/forge-std/src/
+@kevincharm/bls-bn254/=lib/bls-bn254/

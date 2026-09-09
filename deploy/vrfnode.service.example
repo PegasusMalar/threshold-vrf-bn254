@@ -1,0 +1,50 @@
+[Unit]
+Description=Threshold VRF operator 3
+Documentation=https://github.com/robinhood-chain/vrf
+# The node reads the chain the moment it starts, so waiting for a routable
+# address rather than merely a configured one saves a restart on every boot.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=vrf
+Group=vrf
+EnvironmentFile=/etc/vrfnode/secrets.env
+ExecStart=/usr/local/bin/vrfnode \
+  -rpc https://rpc.testnet.chain.robinhood.com/rpc \
+  -coordinator 0x8c02680e1ab2a9c93b37d7cF1735C39B3d7D1267 \
+  -keystore /var/lib/vrfnode/keystore.json \
+  -listen 0.0.0.0:9100 \
+  -metrics-listen 0.0.0.0:9600 \
+  -peers https://a:9100,https://b:9100 \
+  -allow 0.0.0.0/0 \
+  -threshold 5 \
+  -operators 9 \
+  -lookback 2000 \
+  -poll 3s \
+  -publish-delay 2s \
+  -share-rate 500
+
+Restart=always
+RestartSec=5
+# A node that cannot start is usually misconfigured, not unlucky. Without this
+# systemd gives up after five tries and the operator silently leaves the group.
+StartLimitIntervalSec=0
+
+# It reads one file and opens two sockets. Nothing else should be reachable.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictNamespaces=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target
